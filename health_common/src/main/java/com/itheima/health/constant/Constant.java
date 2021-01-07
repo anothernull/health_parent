@@ -1,6 +1,6 @@
 package com.itheima.health.constant;
 
-public class constant {
+public interface Constant {
     static final String DELETE_CHECKITEM_FAIL = "删除检查项失败";
     static final String DELETE_CHECKITEM_SUCCESS = "删除检查项成功";
     static final String ADD_CHECKITEM_SUCCESS = "新增检查项成功";

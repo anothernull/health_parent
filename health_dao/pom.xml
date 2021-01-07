@@ -11,7 +11,6 @@
 
     <artifactId>health_dao</artifactId>
 
-    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.itheima</groupId>
