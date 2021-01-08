@@ -257,12 +257,14 @@
             //分页查询
             findPage() {
                 // 查询所有检查项
-                axios.get('/checkitem/findAll.do').then(res => {
+                axios.post('/checkitem/findPage.do', this.pagination).then(res => {
                     //res.data=>Result对象(flag,message,data)
                     // 判断 是否成功
                     if(res.data.flag){
                         // 绑定数据
-                        this.dataList = res.data.data;
+                        this.dataList = res.data.data.rows;
+                        //总记录数
+                        this.pagination = res.data.data.total;
                     }else{
                         // 提示错误信息
                         this.$message.error(res.data.message);
