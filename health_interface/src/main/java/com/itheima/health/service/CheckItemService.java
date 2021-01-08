@@ -10,4 +10,6 @@ public interface CheckItemService {
      * 查询所有
      */
     List<CheckItem> findAll();
+
+    void add(CheckItem checkItem);
 }
