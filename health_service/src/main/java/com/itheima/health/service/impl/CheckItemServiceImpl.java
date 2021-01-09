@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.alibaba.dubbo.qos.server.DubboLogo.dubbo;
+
 
 //使用Alibaba的包发布服务 interfaceClass指定服务的接口类
 @Service(interfaceClass = CheckItemService.class)
@@ -56,11 +56,30 @@ public class CheckItemServiceImpl implements CheckItemService {
         //判断查询条件
         if (StringUtils.isNotEmpty(queryPageBean.getQueryString())) {
             //有查询条件,模糊查询
-            queryPageBean.setQueryString(""+ queryPageBean.getQueryString() +"");
+            queryPageBean.setQueryString("%"+ queryPageBean.getQueryString() +"%");
         }
         Page<CheckItem> page = checkItemDao.findByCondition(queryPageBean.getQueryString());
         PageResult<CheckItem> pageResult = new PageResult<CheckItem>(page.getTotal(), page.getResult());
 
         return pageResult;
+    }
+
+    /**
+     * 通过id查询检查项
+     * @param id
+     * @return
+     */
+    @Override
+    public CheckItem findById(int id) {
+        return checkItemDao.findById(id);
+    }
+
+    /**
+     * 修改检查项
+     * @return
+     */
+    @Override
+    public void update(CheckItem checkItem) {
+        checkItemDao.update(checkItem);
     }
 }

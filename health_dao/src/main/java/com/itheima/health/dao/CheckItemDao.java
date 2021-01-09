@@ -26,4 +26,17 @@ public interface CheckItemDao {
      * @return
      */
     Page<CheckItem> findByCondition(String queryString);
+
+    /**
+     * 通过id查询检查项
+     * @param id
+     * @return
+     */
+    CheckItem findById(int id);
+
+    /**
+     * 修改检查项
+     * @return
+     */
+    void update(CheckItem checkItem);
 }

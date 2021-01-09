@@ -13,11 +13,24 @@
     </insert>
 
     <select id="findByCondition" parameterType="String" resultType="CheckItem">
-        select * from t_checkitem;
+        select * from t_checkitem
         <where>
-            <if test="value != null and value.lenth > 0">
-                code like #{queryString} or #{name} like #{queryString}
+            <if test="value != null and value.length > 0">
+                code like #{queryString} or name like #{queryString}
             </if>
         </where>
     </select>
+
+    <select id="findById" resultType="CheckItem" parameterType="int">
+        select * from t_checkitem where id=#{id}
+    </select>
+
+    <update id="update" parameterType="CheckItem">
+        update t_checkitem
+    set
+        code=#{code},        name=#{name},
+        sex=#{sex},        age=#{age},        price=#{price},        type=#{type},        remark=#{remark},
+        attention=#{attention}
+    where id=#{id}
+    </update>
 </mapper>
