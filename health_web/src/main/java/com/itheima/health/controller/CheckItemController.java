@@ -38,7 +38,17 @@ public class CheckItemController {
     @PostMapping("/update")
     public Result update(@RequestBody CheckItem checkItem){
         checkItemService.update(checkItem);
-        return new Result(true, Constant.ADD_CHECKITEM_SUCCESS);
+        return new Result(true, Constant.EDIT_CHECKITEM_SUCCESS);
+    }
+
+    /**
+     * 删除检查项
+     * @return
+     */
+    @PostMapping("/deleteById")
+    public Result deleteById(int id){
+        checkItemService.deleteById(id);
+        return new Result(true, Constant.DELETE_CHECKITEM_SUCCESS);
     }
 
     /**

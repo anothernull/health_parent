@@ -38,4 +38,6 @@ public interface CheckItemService {
      * @return
      */
     void update(CheckItem checkItem);
+
+    void deleteById(int id);
 }

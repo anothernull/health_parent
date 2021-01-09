@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.itheima.health.dao.CheckItemDao;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.CheckItem;
 import com.itheima.health.service.CheckItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,5 +82,14 @@ public class CheckItemServiceImpl implements CheckItemService {
     @Override
     public void update(CheckItem checkItem) {
         checkItemDao.update(checkItem);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        int count = checkItemDao.findCountByCheckItemId(id);
+        if (count > 0) {
+            throw new MyException("该检查项被调用,无法删除");
+        }
+        checkItemDao.deleteById(id);
     }
 }
