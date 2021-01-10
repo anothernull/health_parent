@@ -6,7 +6,7 @@
     <!-- keyProperty指定实体类中的主键
          useGeneratedKeys使用自动生成的key   -->
     <insert id="add" parameterType="CheckGroup" keyProperty="id" useGeneratedKeys="true">
-        insert into t_checkgroup(code,name,helpCode,sex,remark,attention)
+        insert into t_checkgroup (code,name,helpCode,sex,remark,attention)
             values (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
     </insert>
 
@@ -14,4 +14,13 @@
         insert into t_checkgroup_checkitem (checkgroup_id, checkitem_id)
             values (#{groupid}, #{checkitemId})
     </insert>
+
+    <select id="findByCondition" parameterType="String" resultType="CheckGroup">
+        select * from t_checkgroup
+        <where>
+            <if test="value != null and value.length > 0">
+                code like #{queryString} or name like #{queryString} or helpCode like #{queryString}
+            </if>
+        </where>
+    </select>
 </mapper>
