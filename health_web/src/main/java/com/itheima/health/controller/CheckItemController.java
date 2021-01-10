@@ -47,8 +47,8 @@ public class CheckItemController {
      */
     @PostMapping("/deleteById")
     public Result deleteById(int id){
-        checkItemService.deleteById(id);
-        return new Result(true, Constant.DELETE_CHECKITEM_SUCCESS);
+            checkItemService.deleteById(id);
+            return new Result(true, Constant.DELETE_CHECKITEM_SUCCESS);
     }
 
     /**

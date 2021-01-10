@@ -344,6 +344,8 @@
                         if (res.data.flag){
                             //刷新列表
                             this.findPage();
+                        }else {
+                            this.$message.error(res.data.message);
                         }
                     })
                 }).catch(() => {

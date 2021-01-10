@@ -20,7 +20,7 @@ public class MyExceptionAdvice {
      */
     @ExceptionHandler(MyException.class)
     public Result handlerMyExceptionAdvice(MyException e){
-        return new Result(true, e.getMessage());
+        return new Result(false, e.getMessage());
     }
 
     /**
@@ -32,6 +32,6 @@ public class MyExceptionAdvice {
     public Result handlerExceptionAdvice(MyException e){
         //记录异常信息
         log.error("发生未知异常", e);
-        return new Result(true, "发生未知异常");
+        return new Result(false, "发生未知异常");
     }
 }

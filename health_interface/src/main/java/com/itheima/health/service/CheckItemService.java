@@ -2,6 +2,7 @@ package com.itheima.health.service;
 
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.CheckItem;
 
 import java.util.List;
@@ -39,5 +40,5 @@ public interface CheckItemService {
      */
     void update(CheckItem checkItem);
 
-    void deleteById(int id);
+    void deleteById(int id) throws MyException;
 }
