@@ -52,4 +52,17 @@ public interface CheckGroupDao {
      * @param id
      */
     void deleteCheckGroupCheckItem(Integer id);
+
+    /**
+     * 这个检查组是否被套餐使用了
+     * @param id
+     * @return
+     */
+    int findSetmealCountByCheckGroupId(int id);
+
+    /**
+     * 删除检查组
+     * @param id
+     */
+    void deleteById(int id);
 }

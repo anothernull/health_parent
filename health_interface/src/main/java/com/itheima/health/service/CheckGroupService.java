@@ -41,4 +41,11 @@ public interface CheckGroupService {
      * @return
      */
     void update(CheckGroup checkGroup, Integer[] checkitemIds);
+
+    /**
+     * 删除检查组
+     * @param id
+     * @return
+     */
+    void deleteById(int id);
 }

@@ -84,6 +84,10 @@ public class CheckItemServiceImpl implements CheckItemService {
         checkItemDao.update(checkItem);
     }
 
+    /**
+     * 删除检查项
+     * @param id
+     */
     @Override
     public void deleteById(int id) {
         int count = checkItemDao.findCountByCheckItemId(id);
