@@ -28,3 +28,4 @@ hs_err_pid*
 .idea/
 target/
 
+/health_common/src/main/java/com/itheima/health/utils/
