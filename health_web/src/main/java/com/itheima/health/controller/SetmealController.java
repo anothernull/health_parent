@@ -51,5 +51,6 @@ public class SetmealController {
         map.put("domain", QiNiuUtils.DOMAIN);
         //7.封装入result，响应给页面
         return new Result(true, Constant.PIC_UPLOAD_SUCCESS, map);
+
     }
 }
