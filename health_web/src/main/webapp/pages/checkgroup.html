@@ -284,6 +284,19 @@
         methods: {
             //编辑
             handleEdit() {
+                //添加确定按钮的功能
+                axios.post('/checkgroup/update.do?checkitemIds=' + this.checkitemIds, this.formData).then(res => {
+                    this.$message({
+                        message: res.data.message,
+                        type: res.data.flag?"success":"error"
+                    })
+                    if(res.data.flag){
+                        // 【注意】关闭的是编辑窗口
+                        this.dialogFormVisible4Edit = false;
+                        // 刷新列表数据
+                        this.findPage();
+                    }
+                })
             },
             //添加
             handleAdd() {
@@ -338,6 +351,38 @@
             },
             // 弹出编辑窗口
             handleUpdate(row) {
+                //检查组id
+                var id = row.id;
+                //重置表单
+                this.resetForm();
+                //弹出编辑窗口
+                this.dialogFormVisible4Edit = true;
+                //发送请求通过id查询检查组信息，绑定到formData，检查组信息回显
+                axios.get("/checkgroup/findById.do?id=" + id).then(res=>{
+                    if (res.data.flag) {
+                        // 绑定数据
+                        this.formData = res.data.data;
+                        //构建检查项列表
+                        axios.get("/checkitem/findAll.do").then(res1 => {
+                            if (res1.data.flag) {
+                                // 绑定数据
+                                this.tableData = res1.data.data;
+                                //回显勾选检查项
+                                axios.get("/checkgroup/findCheckItemIdsByCheckGroupId.do?id=" + id).then(res2 =>{
+                                    if (res2.data.flag){
+                                        this.checkitemIds = res2.data.data;
+                                    }else {
+                                        this.$message.error(res2.data.message);
+                                    }
+                                })
+                            } else {
+                                this.$message.error(res1.data.message);
+                            }
+                        })
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                })
             },
             //切换页码
             handleCurrentChange(currentPage) {

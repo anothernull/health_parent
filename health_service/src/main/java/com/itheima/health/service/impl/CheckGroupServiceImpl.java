@@ -13,6 +13,8 @@ import com.itheima.health.service.CheckGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service(interfaceClass = CheckGroupService.class)
 public class CheckGroupServiceImpl implements CheckGroupService {
 
@@ -41,6 +43,11 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //添加事务控制
     }
 
+    /**
+     * 分页查询检查组
+     * @param
+     * @return
+     */
     @Override
     public PageResult<CheckGroup> findPage(QueryPageBean queryPageBean) {
         //对queryPageBean.getPageSize()进行限制
@@ -58,5 +65,46 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         PageResult<CheckGroup> pageResult = new PageResult<CheckGroup>(page.getTotal(), page.getResult());
 
         return pageResult;
+    }
+
+    /**
+     * 通过id查询检查组
+     * @param id
+     * @return
+     */
+    @Override
+    public CheckGroup findById(int id) {
+        return checkGroupDao.findById(id);
+    }
+
+    /**
+     * 查询被勾选的检查项
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Integer> findCheckItemIdsByCheckGroupId(int id) {
+        return checkGroupDao.findCheckItemIdsByCheckGroupId(id);
+    }
+
+    /**
+     * 修改检查组
+     * @return
+     */
+    @Override
+    @Transactional
+    public void update(CheckGroup checkGroup, Integer[] checkitemIds) {
+        //更新检查组
+        checkGroupDao.update(checkGroup);
+        //删除旧关系
+        checkGroupDao.deleteCheckGroupCheckItem(checkGroup.getId());
+        //遍历选中的检查项id
+        if (null != checkitemIds) {
+            for (Integer checkitemId : checkitemIds) {
+                //添加新的检查组和检查项的关系
+                checkGroupDao.addCheckGroupCheckItem(checkGroup.getId(), checkitemId);
+            }
+            //添加事务控制
+        }
     }
 }

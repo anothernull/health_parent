@@ -7,10 +7,9 @@ import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.service.CheckGroupService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/checkgroup")
@@ -41,5 +40,39 @@ public class CheckGroupController {
     public Result findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult<CheckGroup> pageResult = checkGroupService.findPage(queryPageBean);
         return new Result(true, Constant.QUERY_CHECKGROUP_SUCCESS, pageResult);
+    }
+
+    /**
+     * 通过id查询检查组
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById")
+    public Result findById(int id){
+        CheckGroup checkGroup = checkGroupService.findById(id);
+        return new Result(true, Constant.QUERY_CHECKGROUP_SUCCESS, checkGroup);
+    }
+
+    /**
+     * 查询被勾选的检查项
+     * @param id
+     * @return
+     */
+    @GetMapping("/findCheckItemIdsByCheckGroupId")
+    public Result findCheckItemIdsByCheckGroupId(int id){
+        List<Integer> list = checkGroupService.findCheckItemIdsByCheckGroupId(id);
+        return new Result(true, Constant.QUERY_CHECKITEM_SUCCESS, list);
+    }
+
+    /**
+     * 修改检查组
+     * @return
+     */
+    @PostMapping("/update")
+    public Result update(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds){
+        //修改检查组
+        checkGroupService.update(checkGroup, checkitemIds);
+
+        return new Result(true, Constant.EDIT_CHECKGROUP_SUCCESS);
     }
 }
