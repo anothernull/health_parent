@@ -87,4 +87,15 @@ public class CheckGroupController {
         checkGroupService.deleteById(id);
         return new Result(true, Constant.DELETE_CHECKGROUP_SUCCESS);
     }
+
+    /**
+     * 查询所有检查组
+     * @return
+     */
+    @GetMapping("/findAll")
+    public Result findAll(){
+        List<CheckGroup> list = checkGroupService.findAll();
+        return new Result(true, Constant.QUERY_CHECKGROUP_SUCCESS, list);
+    }
+
 }

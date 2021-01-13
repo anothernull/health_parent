@@ -4,10 +4,13 @@ package com.itheima.health.controller;
 import com.itheima.health.constant.Constant;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.Setmeal;
+import com.itheima.health.service.SetmealService;
 import com.itheima.health.utils.QiNiuUtils;
+import jdk.nashorn.internal.ir.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +23,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {
+
+    @Reference()
+    private SetmealService setmealService;
 
     private static Logger log = LoggerFactory.getLogger(SetmealController.class);
 
@@ -51,6 +57,17 @@ public class SetmealController {
         map.put("domain", QiNiuUtils.DOMAIN);
         //7.封装入result，响应给页面
         return new Result(true, Constant.PIC_UPLOAD_SUCCESS, map);
+    }
 
+    /**
+     * 添加套餐
+     * @param setmeal
+     * @param checkgroupIds
+     * @return
+     */
+    @PostMapping("add")
+    public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds){
+        setmealService.add(setmeal, checkgroupIds);
+        return new Result(true, Constant.ADD_SETMEAL_SUCCESS);
     }
 }

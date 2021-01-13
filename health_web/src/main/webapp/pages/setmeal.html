@@ -276,16 +276,40 @@
                 },
                 //添加
                 handleAdd () {
+                    axios.post("/setmeal/add.do?checkgroupIds=" + this.checkgroupIds, this.formData).then(res=>{
+                        this.$message({
+                            message:res.data.message,
+                            type:res.data.flag?"success":"error"
+                        });
+                        if (res.data.flag){
+                            //关闭新增窗口
+                            this.dialogFormVisible = true;
+                            //刷新列表
+                            this.findPage();
+                        }
+                    })
                 },
                 //分页查询
                 findPage() {
                 },
                 // 重置表单
                 resetForm() {
+                    this.formData = {};
+                    this.tableData = [];
+                    this.checkgroupIds = [];
+                    this.imageUrl = null;
+                    this.activeName = 'first';
                 },
                 // 弹出添加窗口
                 handleCreate() {
                     this.dialogFormVisible = true;
+                    axios.get("checkgroup/findAll.do").then(res=>{
+                        if (res.data.flag) {
+                            this.tableData = res.data.data;
+                        }else {
+                            this.$message.error(res.data.message);
+                        }
+                    })
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
