@@ -3,6 +3,8 @@ package com.itheima.health.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.health.constant.Constant;
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -65,9 +68,20 @@ public class SetmealController {
      * @param checkgroupIds
      * @return
      */
-    @PostMapping("add")
+    @PostMapping("/add")
     public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds){
         setmealService.add(setmeal, checkgroupIds);
         return new Result(true, Constant.ADD_SETMEAL_SUCCESS);
+    }
+
+    /**
+     * 分页查询
+     * @param queryPageBean
+     * @return
+     */
+    @PostMapping("/findPage")
+    public Result findPage(@RequestBody QueryPageBean queryPageBean){
+        PageResult<Setmeal> pageResult = setmealService.findPage(queryPageBean);
+        return new Result(true, Constant.QUERY_SETMEAL_SUCCESS, pageResult);
     }
 }

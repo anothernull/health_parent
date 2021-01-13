@@ -1,5 +1,6 @@
 package com.itheima.health.dao;
 
+import com.github.pagehelper.Page;
 import com.itheima.health.pojo.Setmeal;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,4 +19,10 @@ public interface SetmealDao {
      */
     void addSetmealCheckGroup(@Param("setmealId") Integer setmealId,@Param("checkgroupId") Integer checkgroupId);
 
+    /**
+     * 分页查询
+     * @param queryString
+     * @return
+     */
+    Page<Setmeal> findByCondition(String queryString);
 }

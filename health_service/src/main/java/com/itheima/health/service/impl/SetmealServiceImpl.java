@@ -1,11 +1,17 @@
 package com.itheima.health.service.impl;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.itheima.health.dao.SetmealDao;
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service(interfaceClass = SetmealService.class)
 public class SetmealServiceImpl implements SetmealService {
@@ -34,5 +40,29 @@ public class SetmealServiceImpl implements SetmealService {
             }
         }
         //事务控制
+    }
+
+    /**
+     * 分页查询
+     * @param queryPageBean
+     * @return
+     */
+    @Override
+    public PageResult<Setmeal> findPage(QueryPageBean queryPageBean) {
+        //对queryPageBean.getPageSize()进行限制
+        int pageSize = (queryPageBean.getPageSize() > 50) ? 50 : queryPageBean.getPageSize();
+        queryPageBean.setPageSize(pageSize);
+
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
+
+        //判断查询条件
+        if (StringUtils.isNotEmpty(queryPageBean.getQueryString())) {
+            //有查询条件,模糊查询
+            queryPageBean.setQueryString("%"+ queryPageBean.getQueryString() +"%");
+        }
+        Page<Setmeal> page = setmealDao.findByCondition(queryPageBean.getQueryString());
+        PageResult<Setmeal> pageResult = new PageResult<Setmeal>(page.getTotal(), page.getResult());
+
+        return pageResult;
     }
 }

@@ -12,4 +12,13 @@
         insert into t_setmeal_checkgroup (setmeal_id, checkgroup_id)
             values (#{setmealId}, #{checkgroupId});
     </insert>
+
+    <select id="findByCondition" parameterType="String" resultType="Setmeal">
+        select * from t_setmeal
+        <where>
+            <if test="value != null and value.length > 0">
+                code like #{queryString} or name like #{queryString} or helpCode like #{queryString}
+            </if>
+        </where>
+    </select>
 </mapper>

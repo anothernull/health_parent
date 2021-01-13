@@ -291,6 +291,16 @@
                 },
                 //分页查询
                 findPage() {
+                    axios.post('/setmeal/findPage.do', this.pagination).then(res => {
+                        if(res.data.flag){
+                            // 绑定分页的结果集
+                            this.dataList = res.data.data.rows;
+                            // 总计录数
+                            this.pagination.total = res.data.data.total;
+                        }else{
+                            this.$message.error(res.data.message);
+                        }
+                    })
                 },
                 // 重置表单
                 resetForm() {
