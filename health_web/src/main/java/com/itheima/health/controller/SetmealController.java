@@ -1,12 +1,12 @@
 package com.itheima.health.controller;
 
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.health.constant.Constant;
 import com.itheima.health.entity.Result;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import com.itheima.health.utils.QiNiuUtils;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import java.util.UUID;
 @RequestMapping("/setmeal")
 public class SetmealController {
 
-    @Reference()
+    @Reference
     private SetmealService setmealService;
 
     private static Logger log = LoggerFactory.getLogger(SetmealController.class);
