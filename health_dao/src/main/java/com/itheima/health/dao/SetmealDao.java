@@ -53,4 +53,17 @@ public interface SetmealDao {
      * @param id
      */
     void deleteSetmealCheckGroup(Integer id);
+
+    /**
+     * 通过套餐的id查询使用了这个套餐的订单个数
+     * @param id
+     * @return
+     */
+    int findOrderCountBySetmealId(Integer id);
+
+    /**
+     * 通过id删除套餐信息
+     * @param id
+     */
+    void deleteById(Integer id);
 }

@@ -119,4 +119,15 @@ public class SetmealController {
         setmealService.update(setmeal, checkGroupIds);
         return new Result(true, "编辑套餐成功");
     }
+
+    /**
+     * 删除套餐
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteById")
+    public Result deleteById(Integer id){
+        setmealService.deleteById(id);
+        return new Result(true,"删除套餐成功");
+    }
 }

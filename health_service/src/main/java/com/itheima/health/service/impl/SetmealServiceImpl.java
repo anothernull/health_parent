@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.itheima.health.dao.SetmealDao;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.Setmeal;
 import com.itheima.health.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +109,24 @@ public class SetmealServiceImpl implements SetmealService {
             }
             //事务控制
         }
+    }
+
+    /**
+     * 删除套餐
+     * @param id
+     */
+    @Override
+    @Transactional
+    public void deleteById(Integer id) {
+        // 是否存在订单，如果存在则不能删除
+        int count = setmealDao.findOrderCountBySetmealId(id);
+        if(count > 0){
+            // 已经有订单使用了这个套餐，不能删除
+            throw new MyException("已经有订单使用了这个套餐，不能删除！");
+        }
+        // 先删除套餐与检查组的关系
+        setmealDao.deleteSetmealCheckGroup(id);
+        // 再删除套餐
+        setmealDao.deleteById(id);
     }
 }
