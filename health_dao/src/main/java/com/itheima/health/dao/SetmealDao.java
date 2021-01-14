@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.itheima.health.pojo.Setmeal;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SetmealDao {
     /**
      * 添加套餐
@@ -25,4 +27,30 @@ public interface SetmealDao {
      * @return
      */
     Page<Setmeal> findByCondition(String queryString);
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    Setmeal findById(Integer id);
+
+    /**
+     * 查询选中的检查组id集合
+     * @param id
+     * @return
+     */
+    List<Integer> findCheckGroupIdsBySetmealId(int id);
+
+    /**
+     * 更新套餐
+     * @param setmeal
+     */
+    void update(Setmeal setmeal);
+
+    /**
+     * 删除旧关系
+     * @param id
+     */
+    void deleteSetmealCheckGroup(Integer id);
 }

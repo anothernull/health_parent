@@ -11,10 +11,7 @@ import com.itheima.health.service.SetmealService;
 import com.itheima.health.utils.QiNiuUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -83,5 +80,43 @@ public class SetmealController {
     public Result findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult<Setmeal> pageResult = setmealService.findPage(queryPageBean);
         return new Result(true, Constant.QUERY_SETMEAL_SUCCESS, pageResult);
+    }
+
+    /**
+     * 通过id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById")
+    public Result findById(Integer id){
+        Setmeal setmeal = setmealService.findById(id);
+        //构建前端需要的数据，还要域名
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("setmeal", setmeal);
+        map.put("domain", QiNiuUtils.DOMAIN);
+        return new Result(true, Constant.QUERY_SETMEALLIST_SUCCESS, map);
+    }
+
+    /**
+     * 查询选中的检查组id集合
+     * @param id
+     * @return
+     */
+    @GetMapping("/findCheckGroupIdsBySetmealId")
+    public Result findCheckGroupIdsBySetmealId(int id){
+        List<Integer> checkGroupIds = setmealService.findCheckGroupIdsBySetmealId(id);
+        return new Result(true, Constant.QUERY_SETMEAL_SUCCESS, checkGroupIds);
+    }
+
+    /**
+     * 编辑套餐
+     * @param setmeal
+     * @param checkGroupIds
+     * @return
+     */
+    @PostMapping("/update")
+    public Result update(@RequestBody Setmeal setmeal, Integer[] checkGroupIds){
+        setmealService.update(setmeal, checkGroupIds);
+        return new Result(true, "编辑套餐成功");
     }
 }
