@@ -50,4 +50,11 @@ public interface SetmealService {
      * @return
      */
     void deleteById(Integer id);
+
+    /**
+     * 查询所以图片
+     * @return
+     */
+    List<String> fingImgs();
+
 }

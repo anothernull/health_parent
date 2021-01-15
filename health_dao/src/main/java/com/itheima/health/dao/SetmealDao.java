@@ -66,4 +66,11 @@ public interface SetmealDao {
      * @param id
      */
     void deleteById(Integer id);
+
+    /**
+     * 查询所以图片
+     * @return
+     */
+    List<String> fingImgs();
+
 }
