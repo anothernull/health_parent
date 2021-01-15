@@ -23,7 +23,7 @@ public class CleanImgJob {
     /**
      * 调用任务类，清理七牛上的垃圾图片
      */
-    @Scheduled(initialDelay = 3000, fixedDelay = 1800000)
+    @Scheduled(cron = "0 0 4 * * ?")
     public void cleanImg(){
         log.info("开始执行清理垃圾图片");
         //调用QiNiuUtils.查询所有的图片
