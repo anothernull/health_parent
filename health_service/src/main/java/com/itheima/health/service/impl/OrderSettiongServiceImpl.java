@@ -1,6 +1,7 @@
 package com.itheima.health.service.impl;
 
 import com.alibaba.dubbo.common.utils.CollectionUtils;
+import com.alibaba.dubbo.config.annotation.Service;
 import com.itheima.health.dao.OrderSettiongDao;
 import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.OrderSetting;
@@ -10,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
+@Service(interfaceClass = OrderSettiongService.class)
 public class OrderSettiongServiceImpl implements OrderSettiongService {
 
     @Autowired
@@ -57,5 +60,16 @@ public class OrderSettiongServiceImpl implements OrderSettiongService {
             }
         }
         //事务控制
+    }
+
+    /**
+     * 通过月份查询预约设置信息
+     * @param month
+     * @return
+     */
+    @Override
+    public List<Map<String, Integer>> getOrderSettingByMonth(String month) {
+        month += "%";
+        return orderSettiongDao.getOrderSettingByMonth(month);
     }
 }

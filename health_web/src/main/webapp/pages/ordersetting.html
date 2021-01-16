@@ -140,8 +140,26 @@
         },
         created: function () {//在vue初始化时调用
             this.initData(null);
+            //查询预约设置表当月的数据
+            this.getDataByMonth();
         },
         methods: {
+            //刷新页面
+            getDataByMonth() {
+                //获取当前的年-月  2021-01
+                var month = this.currentYear + "-";
+                month += this.currentMonth < 10 ? '0' : '';
+                month += this.currentMonth;
+                //发送请求去查询这个月的预约设置信息
+                axios.get("/ordersetting/getOrderSettingByMonth.do?month=" + month).then(res => {
+                    //成功的话数据绑定到leftobj里
+                    if (res.data.flag){
+                        this.leftobj = res.data.data;
+                    }else {
+                        this.$message.error(res.data.message);
+                    }
+                });
+            },
             //预约设置
             handleOrderSet(day) {
             },
@@ -169,6 +187,7 @@
                     type: res.data.flag ? "success" : "error"
                 });
                 //刷新日历
+                this.getDataByMonth();
             },
             //初始化当前页要展示的日期
             initData: function (cur) {
@@ -178,7 +197,7 @@
                     date = new Date(cur);
                 } else {
                     var now = new Date();
-                    var d = new Date(this.formatDate(now.getFullYear(), now.getMonth(), 1));
+                    var d = new Date(this.formatDate(now.getFullYear(), now.getMonth() + 1, 1));
                     d.setDate(35);
                     date = new Date(this.formatDate(d.getFullYear(), d.getMonth(), 1));
                 }

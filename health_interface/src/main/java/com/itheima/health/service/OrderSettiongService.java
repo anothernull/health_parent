@@ -4,6 +4,7 @@ import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.OrderSetting;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderSettiongService {
 
@@ -13,4 +14,11 @@ public interface OrderSettiongService {
      * @return
      */
     void addBatch(List<OrderSetting> orderSettingList) throws MyException;
+
+    /**
+     * 通过月份查询预约设置信息
+     * @param month
+     * @return
+     */
+    List<Map<String, Integer>> getOrderSettingByMonth(String month);
 }

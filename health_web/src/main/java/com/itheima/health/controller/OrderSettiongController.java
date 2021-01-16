@@ -8,6 +8,7 @@ import com.itheima.health.service.OrderSettiongService;
 import com.itheima.health.utils.POIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -63,6 +65,15 @@ public class OrderSettiongController {
             log.error("导入预约设置失败", e);
             return new Result(false, Constant.IMPORT_ORDERSETTING_FAIL);
         }
+    }
 
+    /**
+     * 通过月份查询预约设置信息
+     * @return
+     */
+    @GetMapping("/getOrderSettingByMonth")
+    public Result getDataByMonth(String month){
+        List<Map<String, Integer>> list = orderSettiongService.getOrderSettingByMonth(month);
+        return new Result(true, Constant.QUERY_ORDER_SUCCESS, list);
     }
 }
