@@ -36,7 +36,7 @@ public class OrderSettiongServiceImpl implements OrderSettiongService {
                 //通过预约的日期来查询预约设置表，看这个日期的设置信息有没有
                 OrderSetting osInDB = orderSettiongDao.findByOrderDate(os.getOrderDate());
                 //没有预约设置(表中没有这个日期的记录)
-                if (osInDB == null) {
+                if (null == osInDB) {
                     //调用dao插入数据
                     orderSettiongDao.add(os);
 
@@ -71,5 +71,36 @@ public class OrderSettiongServiceImpl implements OrderSettiongService {
     public List<Map<String, Integer>> getOrderSettingByMonth(String month) {
         month += "%";
         return orderSettiongDao.getOrderSettingByMonth(month);
+    }
+
+    /**
+     * 通过日期修改最大预约数
+     * @param orderSetting
+     * @return
+     */
+    @Override
+    public void editNumberByDate(OrderSetting orderSetting) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //通过预约的日期来查询预约设置表，看这个日期的设置信息有没有
+        OrderSetting osInDB = orderSettiongDao.findByOrderDate(orderSetting.getOrderDate());
+        //没有预约设置(表中没有这个日期的记录)
+        if (null == osInDB) {
+            //调用dao插入数据
+            orderSettiongDao.add(orderSetting);
+            //有预约设置(表中有这个日期的记录)
+        } else {
+            //已预约人数
+            int reservations = osInDB.getReservations();
+            //要更新的最大预约值
+            int number = orderSetting.getNumber();
+            //判断已预约人数是否大于要更新的最大预约数
+            if (reservations > number){
+                //大于则要报错，接口方法 异常声明
+                throw new MyException(sdf.format(orderSetting.getOrderDate()) + ":最大预约数不能小于已已预约数");
+            }else {
+                //小于，则可以更新最大预约数
+                orderSettiongDao.updateNumber(orderSetting);
+            }
+        }
     }
 }

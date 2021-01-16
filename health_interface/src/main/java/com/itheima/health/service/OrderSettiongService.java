@@ -21,4 +21,11 @@ public interface OrderSettiongService {
      * @return
      */
     List<Map<String, Integer>> getOrderSettingByMonth(String month);
+
+    /**
+     * 通过日期修改最大预约数
+     * @param orderSetting
+     * @return
+     */
+    void editNumberByDate(OrderSetting orderSetting) throws MyException;
 }
