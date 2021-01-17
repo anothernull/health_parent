@@ -51,4 +51,7 @@
     <select id="fingImgs" resultType="String">
         select img from t_setmeal;
     </select>
+    <select id="findAll" resultType="Setmeal">
+        select * from t_setmeal;
+    </select>
 </mapper>

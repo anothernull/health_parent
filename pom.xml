@@ -16,6 +16,7 @@
         <module>health_service</module>
         <module>health_web</module>
         <module>health_job</module>
+        <module>health_mobile</module>
     </modules>
 
     <properties>
@@ -210,6 +211,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <version>4.0.11</version>
         </dependency>
     </dependencies>
     <build>

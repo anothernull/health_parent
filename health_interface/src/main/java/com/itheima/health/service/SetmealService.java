@@ -57,4 +57,10 @@ public interface SetmealService {
      */
     List<String> fingImgs();
 
+    /**
+     * 查询所有的套餐
+     * @return
+     */
+    List<Setmeal> findAll();
+
 }
