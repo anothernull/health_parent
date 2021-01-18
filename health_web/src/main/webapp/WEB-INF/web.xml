@@ -3,6 +3,17 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
+    <filter>
+        <!--代理过滤器：本不处理请求转给spring容器中一个名叫springSecurityFilterChain的bean对象来处理-->
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <display-name>Archetype Created Web Application</display-name>
         <!-- 解决post乱码 -->
         <filter>
@@ -35,7 +46,4 @@
             <servlet-name>springmvc</servlet-name>
             <url-pattern>*.do</url-pattern>
         </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>pages/ordersetting.html</welcome-file>
-    </welcome-file-list>
 </web-app>

@@ -29,3 +29,5 @@ hs_err_pid*
 target/
 
 /health_common/src/main/java/com/itheima/health/utils/
+/security_demo_plus/
+/security_demo/
